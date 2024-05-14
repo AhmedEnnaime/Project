@@ -2,6 +2,7 @@ package com.progress.project.services.impl;
 
 import com.progress.project.exceptions.BicAlreadyExistsException;
 import com.progress.project.exceptions.CodeAlreadyExistsException;
+import com.progress.project.exceptions.ResourceNotFoundException;
 import com.progress.project.models.dto.ParticipantDto;
 import com.progress.project.models.entities.Participant;
 import com.progress.project.models.enums.TYPE;
@@ -110,22 +111,34 @@ public class ParticipantServiceImplTest {
     @DisplayName("Test findAll method when the list is not empty")
     public void testFindAllWhenListIsNotEmpty() {
         given(participantRepository.findAll()).willReturn(List.of(participant));
-
         given(modelMapper.map(participant, ParticipantDto.class)).willReturn(participantDto);
-
         List<ParticipantDto> allParticipants = participantService.findAll();
-
         verify(participantRepository, times(1)).findAll();
-
         assertThat(allParticipants)
                 .isNotNull()
                 .hasSize(1);
     }
 
-//    public void testUpdateWhenCodeNotFound() {
-//        given(participantRepository.findById())
-//
-//    }
+    @Test
+    @DisplayName("Test update method when the code of participant not found")
+    public void testUpdateWhenCodeNotFound() {
+        given(participantRepository.findById(participantDto.getCode())).willReturn(Optional.empty());
+        assertThatExceptionOfType(ResourceNotFoundException.class)
+                .isThrownBy(() -> participantService.update(participantDto.getCode() ,participantDto))
+                .withMessage("Participant with code " + participantDto.getCode() + " not found");
+    }
+
+    @Test
+    @DisplayName("Test update method when the code of participant is found")
+    public void testUpdateWhenCodeIsFound() {
+        given(participantRepository.findById(participantDto.getCode())).willReturn(Optional.of(participant));
+        given(participantRepository.save(participant)).willReturn(participant);
+        given(modelMapper.map(participant, ParticipantDto.class)).willReturn(participantDto);
+        ParticipantDto result = participantService.update(participantDto.getCode(), participantDto);
+        assertThat(result).isEqualTo(participantDto);
+        verify(participantRepository, times(1)).findById(participantDto.getCode());
+        verify(participantRepository, times(1)).save(participant);
+    }
 
 
 }
