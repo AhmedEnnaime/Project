@@ -19,6 +19,7 @@ public class ParticipantDto {
 
     @NotNull(message = "bic must not be null")
     @NotEmpty(message = "bic must not be empty")
+    @Pattern(regexp = "^[A-Z]{4}[-]?[A-Z]{2}[-]?[A-Z0-9]{2}[-]?[0-9]{3}$", message = "bic must be valid")
     private String bic;
 
     @NotNull(message = "name must not be null")
