@@ -14,7 +14,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
@@ -78,5 +82,45 @@ public class ParticipantServiceImplTest {
                 .isThrownBy(() -> participantService.create(participantDto))
                 .withMessage("This Bic " + participantDto.getBic() + " already exists");
     }
-    
+
+    @Test
+    @DisplayName("Test create method when the insertion is successful")
+    public void testCreateMethodSuccess() {
+        given(modelMapper.map(participantDto, Participant.class)).willReturn(participant);
+        given(participantRepository.existsById(123456L)).willReturn(false);
+        given(participantRepository.findByBic("abcd")).willReturn(Optional.empty());
+        given(participantRepository.save(participant)).willReturn(participant);
+        given(modelMapper.map(participant, ParticipantDto.class)).willReturn(participantDto);
+        ParticipantDto result = participantService.create(participantDto);
+        assertThat(result).isEqualTo(participantDto);
+        verify(participantRepository, times(1)).existsById(123456L);
+        verify(participantRepository, times(1)).findByBic("abcd");
+        verify(participantRepository, times(1)).save(participant);
+    }
+
+    @Test
+    @DisplayName("Test findAll method when the list is empty")
+    public void testFindAllWhenListIsEmpty() {
+        given(participantRepository.findAll()).willReturn(Collections.emptyList());
+        List<ParticipantDto> allParticipants = participantService.findAll();
+        assertThat(allParticipants).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Test findAll method when the list is not empty")
+    public void testFindAllWhenListIsNotEmpty() {
+        given(participantRepository.findAll()).willReturn(List.of(participant));
+
+        given(modelMapper.map(participant, ParticipantDto.class)).willReturn(participantDto);
+
+        List<ParticipantDto> allParticipants = participantService.findAll();
+
+        verify(participantRepository, times(1)).findAll();
+
+        assertThat(allParticipants)
+                .isNotNull()
+                .hasSize(1);
+    }
+
+
 }
