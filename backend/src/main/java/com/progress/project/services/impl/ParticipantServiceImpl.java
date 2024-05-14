@@ -1,5 +1,6 @@
 package com.progress.project.services.impl;
 
+import com.progress.project.exceptions.BicAlreadyExistsException;
 import com.progress.project.exceptions.CodeAlreadyExistsException;
 import com.progress.project.exceptions.ResourceNotFoundException;
 import com.progress.project.models.dto.ParticipantDto;
@@ -25,6 +26,8 @@ public class ParticipantServiceImpl implements ParticipantService {
         Participant participant = modelMapper.map(participantDto, Participant.class);
         if (participantRepository.existsById(participantDto.getCode()))
             throw new CodeAlreadyExistsException("This Code " + participantDto.getCode() + " already exists");
+        if (participantRepository.findByBic(participantDto.getBic()).isPresent())
+            throw new BicAlreadyExistsException("This Bic " + participantDto.getBic() + " already exists");
         if (participantDto.getType() == TYPE.INDIRECT) {
             participant.setSettlementBank(participantDto.getSettlementBank());
         }else {
