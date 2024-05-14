@@ -122,5 +122,10 @@ public class ParticipantServiceImplTest {
                 .hasSize(1);
     }
 
+//    public void testUpdateWhenCodeNotFound() {
+//        given(participantRepository.findById())
+//
+//    }
+
 
 }

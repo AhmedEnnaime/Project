@@ -1,0 +1,48 @@
+<form class="flex flex-col h-fit justify-center items-center gap-5" [formGroup]="form">
+    <mat-dialog-content>
+        <h2 class="font-Montserrat font-bold text-[30px] p-4 w-full inline-block mt-5">{{ data.participant !== undefined
+            ?
+            'Update Participant' : 'Add Participant' }}</h2>
+
+
+        <mat-form-field class="w-full">
+            <mat-label>Code</mat-label>
+            <input matInput placeholder="code" formControlName="code">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Bic</mat-label>
+            <input matInput placeholder="bic" formControlName="bic">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Short name</mat-label>
+            <input matInput placeholder="shortName" formControlName="shortName">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option [value]="typeEnum.DIRECT">DIRECT</mat-option>
+                <mat-option [value]="typeEnum.INDIRECT">INDIRECT</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Logo</mat-label>
+            <input matInput formControlName="logo" type="logo">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Settlement Bank</mat-label>
+            <input matInput placeholder="settlementBank" formControlName="settlementBank" type="text">
+        </mat-form-field>
+        <mat-dialog-actions align="center">
+            <button mat-dialog-close class="bg-[#ce8c12] rounded-md text-white font-bold p-2">Close</button>
+            <button class="bg-[#1267CE] rounded-md text-white font-bold p-2 ml-3" (click)="handleParticipant()">{{
+                data.participant
+                !==
+                undefined ?
+                'Update' : 'Create' }}</button>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</form>
