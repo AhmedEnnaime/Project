@@ -7,6 +7,6 @@ import java.util.List;
 public interface ParticipantService {
 
     ParticipantDto create(ParticipantDto participantDto);
-    ParticipantDto update(String code, ParticipantDto participantDto);
+    ParticipantDto update(Long code, ParticipantDto participantDto);
     List<ParticipantDto> findAll();
 }

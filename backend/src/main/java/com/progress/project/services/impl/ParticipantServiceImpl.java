@@ -1,6 +1,7 @@
 package com.progress.project.services.impl;
 
 import com.progress.project.exceptions.CodeAlreadyExistsException;
+import com.progress.project.exceptions.ResourceNotFoundException;
 import com.progress.project.models.dto.ParticipantDto;
 import com.progress.project.models.entities.Participant;
 import com.progress.project.models.enums.TYPE;
@@ -33,7 +34,10 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantDto update(String code, ParticipantDto participantDto) {
+    public ParticipantDto update(Long code, ParticipantDto participantDto) {
+        if (!participantRepository.existsById(code))
+            throw new ResourceNotFoundException("Participant with code " + code + " doesn't exist");
+        
         return null;
     }
 
