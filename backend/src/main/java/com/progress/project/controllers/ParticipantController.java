@@ -26,7 +26,14 @@ public class ParticipantController {
     public ResponseEntity<ParticipantDto> createParticipant(@Valid @RequestBody ParticipantDto participantDto) {
         ParticipantDto createdParticipant = participantService.create(participantDto);
         log.info("Created Participant: {}", createdParticipant);
-        return new ResponseEntity<>(createdParticipant, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdParticipant);
+    }
+
+    @PutMapping("/{code}")
+    public ResponseEntity<ParticipantDto> createParticipant(@Valid @RequestBody ParticipantDto participantDto, @PathVariable Long code) {
+        ParticipantDto updatedParticipant = participantService.update(code, participantDto);
+        log.info("Updated Participant: {}", updatedParticipant);
+        return ResponseEntity.ok(updatedParticipant);
     }
 
     @GetMapping

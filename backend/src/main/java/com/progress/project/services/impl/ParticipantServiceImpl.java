@@ -35,11 +35,27 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public ParticipantDto update(Long code, ParticipantDto participantDto) {
-        if (!participantRepository.existsById(code))
-            throw new ResourceNotFoundException("Participant with code " + code + " doesn't exist");
-        
-        return null;
+       
+        Participant existingParticipant = participantRepository.findById(code)
+                .orElseThrow(() -> new ResourceNotFoundException("Participant with code " + code + " not found"));
+
+        existingParticipant.setName(participantDto.getName());
+        existingParticipant.setBic(participantDto.getBic());
+        existingParticipant.setShortName(participantDto.getShortName());
+        existingParticipant.setLogo(participantDto.getLogo());
+        existingParticipant.setType(participantDto.getType());
+        existingParticipant.setCode(participantDto.getCode());
+
+        if (participantDto.getType() == TYPE.INDIRECT) {
+            existingParticipant.setSettlementBank(participantDto.getSettlementBank());
+        } else {
+            existingParticipant.setSettlementBank(null);
+        }
+
+        Participant updatedParticipant = participantRepository.save(existingParticipant);
+        return modelMapper.map(updatedParticipant, ParticipantDto.class);
     }
+
 
     @Override
     public List<ParticipantDto> findAll() {
