@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  spring-app:
+    container_name: spring-app
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://psql-db:5432/project
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    networks:
+      - project
+    depends_on:
+      - psql-db
+  psql-db:
+    container_name: psql-db
+    image: "postgres:15"
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "project"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - project
+
+networks:
+  project:
+    driver: bridge
+
+volumes:
+  postgres-db:
+    driver: local
