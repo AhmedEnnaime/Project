@@ -30,7 +30,7 @@ public class ParticipantController {
     }
 
     @PutMapping("/{code}")
-    public ResponseEntity<ParticipantDto> createParticipant(@Valid @RequestBody ParticipantDto participantDto, @PathVariable Long code) {
+    public ResponseEntity<ParticipantDto> createParticipant(@Valid @RequestBody ParticipantDto participantDto, @PathVariable String code) {
         ParticipantDto updatedParticipant = participantService.update(code, participantDto);
         log.info("Updated Participant: {}", updatedParticipant);
         return ResponseEntity.ok(updatedParticipant);

@@ -45,7 +45,7 @@ public class ParticipantServiceImplTest {
     @BeforeEach
     public void setUp() {
         participant = Participant.builder()
-                .code(123456L)
+                .code("123456")
                 .bic("abcd")
                 .name("Ahmed")
                 .shortName("AHM")
@@ -55,7 +55,7 @@ public class ParticipantServiceImplTest {
                 .build();
 
         participantDto = ParticipantDto.builder()
-                .code(123456L)
+                .code("123456")
                 .bic("abcd")
                 .name("Ahmed")
                 .shortName("AHM")
@@ -68,7 +68,7 @@ public class ParticipantServiceImplTest {
     @Test
     @DisplayName("Test create method when the code already exists")
     public void testCreateWhenCodeAlreadyExists() {
-        given(participantRepository.existsById(123456L)).willReturn(true);
+        given(participantRepository.existsById("123456")).willReturn(true);
         assertThatExceptionOfType(CodeAlreadyExistsException.class)
                 .isThrownBy(() -> participantService.create(participantDto))
                 .withMessage("This Code " + participantDto.getCode() + " already exists");
@@ -77,7 +77,7 @@ public class ParticipantServiceImplTest {
     @Test
     @DisplayName("Test create method when the bic already exists")
     public void testCreateWhenBicAlreadyExists() {
-        given(participantRepository.existsById(123456L)).willReturn(false);
+        given(participantRepository.existsById("123456")).willReturn(false);
         given(participantRepository.findByBic("abcd")).willReturn(Optional.of(participant));
         assertThatExceptionOfType(BicAlreadyExistsException.class)
                 .isThrownBy(() -> participantService.create(participantDto))
@@ -88,13 +88,13 @@ public class ParticipantServiceImplTest {
     @DisplayName("Test create method when the insertion is successful")
     public void testCreateMethodSuccess() {
         given(modelMapper.map(participantDto, Participant.class)).willReturn(participant);
-        given(participantRepository.existsById(123456L)).willReturn(false);
+        given(participantRepository.existsById("123456")).willReturn(false);
         given(participantRepository.findByBic("abcd")).willReturn(Optional.empty());
         given(participantRepository.save(participant)).willReturn(participant);
         given(modelMapper.map(participant, ParticipantDto.class)).willReturn(participantDto);
         ParticipantDto result = participantService.create(participantDto);
         assertThat(result).isEqualTo(participantDto);
-        verify(participantRepository, times(1)).existsById(123456L);
+        verify(participantRepository, times(1)).existsById("123456");
         verify(participantRepository, times(1)).findByBic("abcd");
         verify(participantRepository, times(1)).save(participant);
     }

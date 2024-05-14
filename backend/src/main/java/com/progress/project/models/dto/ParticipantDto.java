@@ -13,9 +13,8 @@ import lombok.*;
 public class ParticipantDto {
 
     @NotNull(message = "code must not be null")
-    @Min(value = 100000, message = "code must be a 6-digit number")
-    @Max(value = 999999, message = "code must be a 6-digit number")
-    private Long code;
+    @Pattern(regexp = "^[0-9]{6}$", message = "code must be a 6-digit number")
+    private String code;
 
     @NotNull(message = "bic must not be null")
     @NotEmpty(message = "bic must not be empty")

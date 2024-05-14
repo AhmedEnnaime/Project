@@ -15,7 +15,7 @@ import lombok.*;
 public class Participant {
 
     @Id
-    private Long code;
+    private String code;
 
     @Column(nullable = false, unique = true)
     private String bic;

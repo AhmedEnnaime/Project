@@ -37,7 +37,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantDto update(Long code, ParticipantDto participantDto) {
+    public ParticipantDto update(String code, ParticipantDto participantDto) {
        
         Participant existingParticipant = participantRepository.findById(code)
                 .orElseThrow(() -> new ResourceNotFoundException("Participant with code " + code + " not found"));
