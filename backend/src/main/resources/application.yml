@@ -18,3 +18,7 @@ logging:
     root: INFO
     com.progress.bloomberg: DEBUG
     org.springframework.web: ERROR
+
+ahmed:
+  openapi:
+    dev-url: http://localhost:8082
