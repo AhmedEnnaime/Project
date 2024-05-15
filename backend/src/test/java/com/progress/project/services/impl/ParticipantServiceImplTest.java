@@ -46,7 +46,7 @@ public class ParticipantServiceImplTest {
     public void setUp() {
         participant = Participant.builder()
                 .code("123456")
-                .bic("abcd")
+                .bic("ABCD-XY-12-123")
                 .name("Ahmed")
                 .shortName("AHM")
                 .logo("logo")
@@ -56,7 +56,7 @@ public class ParticipantServiceImplTest {
 
         participantDto = ParticipantDto.builder()
                 .code("123456")
-                .bic("abcd")
+                .bic("ABCD-XY-12-123")
                 .name("Ahmed")
                 .shortName("AHM")
                 .logo("logo")
@@ -78,7 +78,7 @@ public class ParticipantServiceImplTest {
     @DisplayName("Test create method when the bic already exists")
     public void testCreateWhenBicAlreadyExists() {
         given(participantRepository.existsById("123456")).willReturn(false);
-        given(participantRepository.findByBic("abcd")).willReturn(Optional.of(participant));
+        given(participantRepository.findByBic("ABCD-XY-12-123")).willReturn(Optional.of(participant));
         assertThatExceptionOfType(BicAlreadyExistsException.class)
                 .isThrownBy(() -> participantService.create(participantDto))
                 .withMessage("This Bic " + participantDto.getBic() + " already exists");
@@ -89,13 +89,13 @@ public class ParticipantServiceImplTest {
     public void testCreateMethodSuccess() {
         given(modelMapper.map(participantDto, Participant.class)).willReturn(participant);
         given(participantRepository.existsById("123456")).willReturn(false);
-        given(participantRepository.findByBic("abcd")).willReturn(Optional.empty());
+        given(participantRepository.findByBic("ABCD-XY-12-123")).willReturn(Optional.empty());
         given(participantRepository.save(participant)).willReturn(participant);
         given(modelMapper.map(participant, ParticipantDto.class)).willReturn(participantDto);
         ParticipantDto result = participantService.create(participantDto);
         assertThat(result).isEqualTo(participantDto);
         verify(participantRepository, times(1)).existsById("123456");
-        verify(participantRepository, times(1)).findByBic("abcd");
+        verify(participantRepository, times(1)).findByBic("ABCD-XY-12-123");
         verify(participantRepository, times(1)).save(participant);
     }
 

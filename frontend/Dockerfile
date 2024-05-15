@@ -1,6 +1,6 @@
 FROM node:19-alpine AS build
 
-WORKDIR /app/youquiz_front
+WORKDIR /app/frontend
 
 COPY package*.json ./
 
@@ -13,6 +13,6 @@ RUN npm install && \
 
 FROM nginx:1.17.1-alpine
 
-COPY --from=build /app/youquiz_front/dist/you-quiz-front /usr/share/nginx/html
+COPY --from=build /app/frontend/dist/frontend /usr/share/nginx/html
 
 EXPOSE 80

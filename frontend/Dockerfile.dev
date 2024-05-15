@@ -1,6 +1,6 @@
 FROM node:19-alpine AS development
 
-WORKDIR /app/youquiz_front
+WORKDIR /app/frontend
 COPY package*.json ./
 
 RUN npm install -g @angular/cli

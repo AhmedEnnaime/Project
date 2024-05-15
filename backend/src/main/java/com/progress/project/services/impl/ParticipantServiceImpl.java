@@ -41,13 +41,11 @@ public class ParticipantServiceImpl implements ParticipantService {
        
         Participant existingParticipant = participantRepository.findById(code)
                 .orElseThrow(() -> new ResourceNotFoundException("Participant with code " + code + " not found"));
-
         existingParticipant.setName(participantDto.getName());
         existingParticipant.setBic(participantDto.getBic());
         existingParticipant.setShortName(participantDto.getShortName());
         existingParticipant.setLogo(participantDto.getLogo());
         existingParticipant.setType(participantDto.getType());
-        existingParticipant.setCode(participantDto.getCode());
 
         if (participantDto.getType() == TYPE.INDIRECT) {
             existingParticipant.setSettlementBank(participantDto.getSettlementBank());
