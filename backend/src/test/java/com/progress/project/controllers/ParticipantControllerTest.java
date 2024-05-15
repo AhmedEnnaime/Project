@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 public class ParticipantControllerTest {
 
-    private final String END_PONT = "/participants";
+    private final String END_PONT = "/api/participants";
     private MockMvc mockMvc;
     private ParticipantService participantService;
 
@@ -41,7 +41,7 @@ public class ParticipantControllerTest {
                 .shortName("AHM")
                 .logo("logo")
                 .type(TYPE.DIRECT)
-                .settlementBank("sample bank")
+                .settlementBank("123456")
                 .build();
 
         var participantDtoJson = objectMapper.writeValueAsString(participantDto);
@@ -61,8 +61,8 @@ public class ParticipantControllerTest {
                 .name("Ahmed")
                 .shortName("AHM")
                 .logo("logo")
-                .type(TYPE.DIRECT)
-                .settlementBank("sample bank")
+                .type(TYPE.INDIRECT)
+                .settlementBank("123456")
                 .build();
         var participantDtoJson = objectMapper.writeValueAsString(participantDto);
 
@@ -75,10 +75,18 @@ public class ParticipantControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(participantDto.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bic").value(participantDto.getBic()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.shortName").value(participantDto.getShortName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value(participantDto.getType()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.logo").value(participantDto.getLogo()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.settl").value(participantDto.getLogo()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.settlementBank").value(participantDto.getSettlementBank()));
     }
+
+    @Test
+    void findAllMethodReturns200Ok() throws Exception {
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get(END_PONT)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
 
 
 

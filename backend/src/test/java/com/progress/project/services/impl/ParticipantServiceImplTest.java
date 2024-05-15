@@ -51,7 +51,7 @@ public class ParticipantServiceImplTest {
                 .shortName("AHM")
                 .logo("logo")
                 .type(TYPE.DIRECT)
-                .settlementBank("sample bank")
+                .settlementBank("123456")
                 .build();
 
         participantDto = ParticipantDto.builder()
@@ -61,7 +61,7 @@ public class ParticipantServiceImplTest {
                 .shortName("AHM")
                 .logo("logo")
                 .type(TYPE.DIRECT)
-                .settlementBank("sample bank")
+                .settlementBank("123456")
                 .build();
     }
 
