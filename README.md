@@ -92,6 +92,8 @@ Code Coverage of the project : 88%
 
 **State Management:** Ngrx
 
+**Styling:** Angular Material UI, Tailwind
+
 **Unit Testing:** JUnit 5, Mockito
 
 **Database:** PostgreSql
@@ -108,9 +110,9 @@ Springboot App : 8082
 
 PostgreSql Database: 5432
 
-Grafana: 3000
+Grafana: http://localhost:3000/
 
-Proemetheus: 9090
+Proemetheus: http://localhost:9090/
 
 Swagger: http://localhost:8082/swagger-ui/index.html
 

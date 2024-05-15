@@ -48,7 +48,26 @@ services:
       - spring-app
     networks:
       - project
-      
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    container_name: prometheus
+    networks:
+      - project
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./backend/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana:9.5.2
+    container_name: grafana
+    networks:
+      - project
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - ./backend/monitoring/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+  
 networks:
   project:
     driver: bridge
