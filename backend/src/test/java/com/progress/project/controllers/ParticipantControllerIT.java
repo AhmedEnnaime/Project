@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class ParticipantControllerTest {
+public class ParticipantControllerIT {
 
     private final String END_PONT = "/api/participants";
     private MockMvc mockMvc;
@@ -26,7 +26,7 @@ public class ParticipantControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    public ParticipantControllerTest(MockMvc mockMvc, ParticipantService participantService) {
+    public ParticipantControllerIT(MockMvc mockMvc, ParticipantService participantService) {
         this.mockMvc = mockMvc;
         this.participantService = participantService;
         objectMapper = new ObjectMapper();
