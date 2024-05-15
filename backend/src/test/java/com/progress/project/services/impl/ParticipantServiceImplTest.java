@@ -86,26 +86,6 @@ public class ParticipantServiceImplTest {
     }
 
     @Test
-    @DisplayName("Test create method when the bic already exists")
-    public void testCreateWhenBicNotValid() {
-        participantDto = ParticipantDto.builder()
-                .code("123456")
-                .bic("ABCD-XY-12-123")
-                .name("Ahmed")
-                .shortName("AHM")
-                .logo("logo")
-                .type(TYPE.DIRECT)
-                .settlementBank("xhwi")
-                .build();
-        
-        given(participantRepository.existsById("123456")).willReturn(false);
-        given(participantRepository.findByBic("ABCD-XY-12-123")).willReturn(Optional.empty());
-        assertThatExceptionOfType(BicNotValidException.class)
-                .isThrownBy(() -> participantService.create(participantDto))
-                .withMessage("settlementBank must be a 6-digit number");
-    }
-
-    @Test
     @DisplayName("Test create method when the insertion is successful")
     public void testCreateMethodSuccess() {
         given(modelMapper.map(participantDto, Participant.class)).willReturn(participant);

@@ -82,7 +82,7 @@ To shut down your containers run
 
 In the following project, you can find two types of testing, Unit testing for the service layer and integration testing for the controller layer.
 
-Code Coverage of the project : 89%
+Code Coverage of the project : 88%
 
 ## Tech Stack
 
