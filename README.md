@@ -78,6 +78,12 @@ To shut down your containers run
   make down
 ```
 
+## Testing
+
+In the following project, you can find two types of testing, Unit testing for the service layer and integration testing for the controller layer.
+
+Code Coverage of the project : 89%
+
 ## Tech Stack
 
 **Server:** Springboot, Jpa
