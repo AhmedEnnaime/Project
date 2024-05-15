@@ -5,7 +5,8 @@
 
     </div>
 
-    <div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-2 justify-center items-center">
-        <div *ngFor="let participant of participants | async">Good</div>
+    <div class="grid lg:grid-cols-3 sm:grid-cols-1 gap-2 justify-center items-center">
+        <app-participant-card *ngFor="let participant of participants | async"
+            [participant]="participant"></app-participant-card>
     </div>
 </div>

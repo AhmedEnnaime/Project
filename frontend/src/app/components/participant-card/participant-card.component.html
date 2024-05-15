@@ -1,1 +1,26 @@
-<p>participant-card works!</p>
+<div class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg none:bg-gray-800">
+    <div class="flex justify-center -mt-16 md:justify-end">
+        <img class="object-cover w-20 h-20 border-2 border-blue-500 rounded-full none:border-blue-400"
+            alt="Testimonial avatar"
+            src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80">
+    </div>
+
+    <h2 class="mt-2 text-xl font-semibold text-gray-800 none:text-white md:mt-0">{{ participant?.name }}</h2>
+
+    <div class="flex flex-col px-4 mt-4">
+        <div class="flex justify-between p-4 items-center">
+            <span class="font-semibold text-xl mt-4">BIC</span>
+            <h2 class="text-gray-600 text-sm">{{ participant?.bic }}</h2>
+        </div>
+
+        <div class="flex justify-between p-4 items-center">
+            <span class="font-semibold text-xl mt-4">Short Name</span>
+            <h2 class="text-gray-600 text-sm">{{ participant?.shortName }}</h2>
+        </div>
+
+    </div>
+
+    <div class="flex justify-end mt-4">
+        <button (click)="openUpdateDialog()" mat-raised-button color="primary">Update</button>
+    </div>
+</div>

@@ -41,6 +41,9 @@ export class ParticipantModalComponent {
         logo: this.data.participant.logo || '',
         settlementBank: this.data.participant.settlementBank || '',
       });
+      this.form.get('code')?.disable();
+    } else {
+      this.form.get('code')?.enable();
     }
 
     this.form.get('type')?.valueChanges.subscribe((value) => {
