@@ -20,7 +20,7 @@ export class ParticipantModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: { participant: IParticipant }
   ) {
     this.form = new FormGroup({
-      code: new FormControl<number>(0),
+      code: new FormControl<number>({ value: 0, disabled: true }),
       bic: new FormControl<string>(''),
       name: new FormControl<string>(''),
       shortName: new FormControl<string>(''),
@@ -57,6 +57,7 @@ export class ParticipantModalComponent {
   }
 
   handleParticipant() {
+    this.form.get('code')?.enable();
     const participant: IParticipant = {
       code: this.form.value.code ?? 0,
       bic: this.form.value.bic ?? '',
@@ -66,6 +67,7 @@ export class ParticipantModalComponent {
       logo: this.form.value.logo ?? '',
       settlementBank: this.form.value.settlementBank ?? '',
     };
+
     if (this.data.participant !== undefined) {
       const participantCode: number = this.data.participant.code ?? 0;
       this.store.dispatch(
@@ -79,6 +81,7 @@ export class ParticipantModalComponent {
         participantPageActions.addParticipant({ participant })
       );
     }
+    this.form.get('code')?.disable();
 
     this.dialogRef.close();
   }

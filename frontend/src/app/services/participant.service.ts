@@ -28,7 +28,7 @@ export class ParticipantService {
   createParticipant(participant: IParticipant): Observable<IParticipant> {
     return this.http
       .post<IParticipant>(
-        `${this.http}/participants`,
+        `${this.baseUrl}/participants`,
         participant,
         this.httpOptions
       )
