@@ -5,7 +5,7 @@ export const enter = createAction('[Participant page] enter');
 
 export const selectParticipant = createAction(
   '[Participant page] select news',
-  props<{ participantCode: number }>()
+  props<{ participantCode: string }>()
 );
 
 export const unselectParticipant = createAction('[News page] unselect news');
@@ -17,5 +17,5 @@ export const addParticipant = createAction(
 
 export const updateParticipant = createAction(
   '[Participant page] update News',
-  props<{ participant: IParticipant; participantCode: number }>()
+  props<{ participant: IParticipant; participantCode: string }>()
 );

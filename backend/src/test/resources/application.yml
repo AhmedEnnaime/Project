@@ -4,3 +4,7 @@ spring:
     username: ahmed
     password: password
     driver-class-name: org.h2.Driver
+
+ahmed:
+  openapi:
+    dev-url: http://localhost:8082

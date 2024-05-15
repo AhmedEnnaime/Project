@@ -1,7 +1,7 @@
 import TYPE from '../enums/TYPE';
 
 interface IParticipant {
-  code: number;
+  code: string;
   bic: string;
   name: string;
   shortName: string;

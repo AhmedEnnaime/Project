@@ -27,6 +27,7 @@ public class Participant {
     private String shortName;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TYPE type;
 
     @Column(nullable = true)

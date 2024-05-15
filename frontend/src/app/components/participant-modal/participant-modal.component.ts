@@ -20,7 +20,7 @@ export class ParticipantModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: { participant: IParticipant }
   ) {
     this.form = new FormGroup({
-      code: new FormControl<number>({ value: 0, disabled: true }),
+      code: new FormControl<string>({ value: '', disabled: true }),
       bic: new FormControl<string>(''),
       name: new FormControl<string>(''),
       shortName: new FormControl<string>(''),
@@ -33,7 +33,7 @@ export class ParticipantModalComponent {
   ngOnInit(): void {
     if (this.data.participant !== undefined) {
       this.form.patchValue({
-        code: this.data.participant.code ?? 0,
+        code: this.data.participant.code ?? '',
         bic: this.data.participant.bic || '',
         name: this.data.participant.name || '',
         shortName: this.data.participant.shortName || '',
@@ -59,7 +59,7 @@ export class ParticipantModalComponent {
   handleParticipant() {
     this.form.get('code')?.enable();
     const participant: IParticipant = {
-      code: this.form.value.code ?? 0,
+      code: this.form.value.code ?? '',
       bic: this.form.value.bic ?? '',
       name: this.form.value.name ?? '',
       shortName: this.form.value.shortName ?? '',
@@ -69,7 +69,7 @@ export class ParticipantModalComponent {
     };
 
     if (this.data.participant !== undefined) {
-      const participantCode: number = this.data.participant.code ?? 0;
+      const participantCode: string = this.data.participant.code ?? '';
       this.store.dispatch(
         participantPageActions.updateParticipant({
           participant,

@@ -36,6 +36,7 @@ public class ParticipantDto {
 
     private String logo;
 
+    @Pattern(regexp = "^[0-9]{6}$", message = "settlementBank must be a 6-digit number")
     private String settlementBank;
 
 }

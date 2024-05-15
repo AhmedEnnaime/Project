@@ -36,7 +36,7 @@ export class ParticipantService {
   }
 
   updateParticipant(
-    id: number,
+    id: string,
     participant: IParticipant
   ): Observable<IParticipant> {
     return this.http

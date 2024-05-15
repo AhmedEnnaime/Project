@@ -3,6 +3,7 @@ run:
 down:
 	@docker compose down
 test:
-	mvn test
+	@cd backend && mvn test
+
 clean:
-	mvn clean install
+	@cd backend && mvn clean install

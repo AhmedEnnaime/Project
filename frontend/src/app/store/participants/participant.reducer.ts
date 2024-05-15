@@ -5,7 +5,7 @@ import IParticipant from 'src/app/core/interfaces/IParticipant';
 
 export interface ParticipantState {
   collection: IParticipant[];
-  selectedParticipantCode: number | null;
+  selectedParticipantCode: string | null;
   loading: boolean;
   errors: {};
 }
