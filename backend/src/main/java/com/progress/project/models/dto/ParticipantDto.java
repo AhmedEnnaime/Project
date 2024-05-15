@@ -2,6 +2,8 @@ package com.progress.project.models.dto;
 
 
 import com.progress.project.models.enums.TYPE;
+
+import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -36,6 +38,7 @@ public class ParticipantDto {
 
     private String logo;
 
+    @Nullable()
     @Pattern(regexp = "^[0-9]{6}$", message = "settlementBank must be a 6-digit number")
     private String settlementBank;
 
