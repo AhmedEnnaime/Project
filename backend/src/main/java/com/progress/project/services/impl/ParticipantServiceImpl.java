@@ -1,6 +1,7 @@
 package com.progress.project.services.impl;
 
 import com.progress.project.exceptions.BicAlreadyExistsException;
+import com.progress.project.exceptions.BicNotValidException;
 import com.progress.project.exceptions.CodeAlreadyExistsException;
 import com.progress.project.exceptions.ResourceNotFoundException;
 import com.progress.project.models.dto.ParticipantDto;
@@ -13,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +31,9 @@ public class ParticipantServiceImpl implements ParticipantService {
         if (participantRepository.findByBic(participantDto.getBic()).isPresent())
             throw new BicAlreadyExistsException("This Bic " + participantDto.getBic() + " already exists");
         if (participantDto.getType() == TYPE.INDIRECT) {
+            if (!Pattern.matches("^[0-9]{6}$", participantDto.getSettlementBank())) {
+                throw new BicNotValidException("settlementBank must be a 6-digit number");
+            }
             participant.setSettlementBank(participantDto.getSettlementBank());
         }else {
             participant.setSettlementBank(null);
@@ -48,6 +53,9 @@ public class ParticipantServiceImpl implements ParticipantService {
         existingParticipant.setType(participantDto.getType());
 
         if (participantDto.getType() == TYPE.INDIRECT) {
+            if (!Pattern.matches("^[0-9]{6}$", participantDto.getSettlementBank())) {
+                throw new BicNotValidException("settlementBank must be a 6-digit number");
+            }
             existingParticipant.setSettlementBank(participantDto.getSettlementBank());
         } else {
             existingParticipant.setSettlementBank(null);

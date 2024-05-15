@@ -1,6 +1,7 @@
 package com.progress.project.services.impl;
 
 import com.progress.project.exceptions.BicAlreadyExistsException;
+import com.progress.project.exceptions.BicNotValidException;
 import com.progress.project.exceptions.CodeAlreadyExistsException;
 import com.progress.project.exceptions.ResourceNotFoundException;
 import com.progress.project.models.dto.ParticipantDto;
@@ -82,6 +83,26 @@ public class ParticipantServiceImplTest {
         assertThatExceptionOfType(BicAlreadyExistsException.class)
                 .isThrownBy(() -> participantService.create(participantDto))
                 .withMessage("This Bic " + participantDto.getBic() + " already exists");
+    }
+
+    @Test
+    @DisplayName("Test create method when the bic already exists")
+    public void testCreateWhenBicNotValid() {
+        participantDto = ParticipantDto.builder()
+                .code("123456")
+                .bic("ABCD-XY-12-123")
+                .name("Ahmed")
+                .shortName("AHM")
+                .logo("logo")
+                .type(TYPE.DIRECT)
+                .settlementBank("xhwi")
+                .build();
+        
+        given(participantRepository.existsById("123456")).willReturn(false);
+        given(participantRepository.findByBic("ABCD-XY-12-123")).willReturn(Optional.empty());
+        assertThatExceptionOfType(BicNotValidException.class)
+                .isThrownBy(() -> participantService.create(participantDto))
+                .withMessage("settlementBank must be a 6-digit number");
     }
 
     @Test

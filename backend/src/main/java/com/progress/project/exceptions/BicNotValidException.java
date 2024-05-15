@@ -4,9 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class CodeAlreadyExistsException extends RuntimeException{
-
-    public CodeAlreadyExistsException(String message) {
+public class BicNotValidException extends RuntimeException {
+    public BicNotValidException(String message) {
         super(message);
     }
 }
