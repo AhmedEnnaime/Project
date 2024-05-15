@@ -87,6 +87,73 @@ public class ParticipantControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    @Test
+    void updateMethodReturnsHttp404NotFoundWhenTheParticipantIsNotFound() throws Exception {
+
+        var participantDto = ParticipantDto.builder()
+                .code("123456")
+                .bic("ABCD-XY-12-123")
+                .name("Ahmed")
+                .shortName("AHM")
+                .logo("logo")
+                .type(TYPE.INDIRECT)
+                .settlementBank("123456")
+                .build();
+        var participantJson = objectMapper.writeValueAsString(participantDto);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put(END_PONT + "/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(participantJson)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void updateMethodReturnsHttp200OKWhenTheLevelIsExist() throws Exception {
+
+        var participantDto = ParticipantDto.builder()
+                .code("123456")
+                .bic("ABCD-XY-12-123")
+                .name("Ahmed")
+                .shortName("AHM")
+                .logo("logo")
+                .type(TYPE.INDIRECT)
+                .settlementBank("123456")
+                .build();
+        var participantJson = objectMapper.writeValueAsString(participantDto);
+        var savedParticipant = participantService.create(participantDto);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put(END_PONT + '/' + savedParticipant.getCode())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(participantJson)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void updateMethodReturnsTheUpdatedLevel() throws Exception {
+
+        var participantDto = ParticipantDto.builder()
+                .code("123456")
+                .bic("ABCD-XY-12-123")
+                .name("Ahmed")
+                .shortName("AHM")
+                .logo("logo")
+                .type(TYPE.INDIRECT)
+                .settlementBank("123456")
+                .build();
+        var participantJson = objectMapper.writeValueAsString(participantDto);
+        var updatedParticipant = participantService.create(participantDto);
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put(END_PONT + '/' + participantDto.getCode())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(participantJson))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(updatedParticipant.getCode()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(updatedParticipant.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.bic").value(updatedParticipant.getBic()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.shortName").value(updatedParticipant.getShortName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.logo").value(updatedParticipant.getLogo()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.settlementBank").value(updatedParticipant.getSettlementBank()));
+    }
+
 
 
 

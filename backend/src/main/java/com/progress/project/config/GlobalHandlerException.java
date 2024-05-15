@@ -38,7 +38,7 @@ public class GlobalHandlerException {
         return errors;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public Map<String, String> handleIdAlreadyExistsException(ResourceNotFoundException ex) {
         log.error("Resource Not Found: {}", ex.getMessage());
